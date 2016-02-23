@@ -15,6 +15,12 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <Button
+            android:id="@+id/btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="123"
+            android:textColor="@color/colorAccent"/>
     </android.support.design.widget.CoordinatorLayout>
 
     <!--menu-->
