@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Rx.iml" filepath="$PROJECT_DIR$/Rx.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rxlib/rxlib.iml" filepath="$PROJECT_DIR$/rxlib/rxlib.iml" />
     </modules>
   </component>
 </project>
