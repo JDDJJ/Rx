@@ -1,4 +1,4 @@
-package rx.dong.com.rx;
+package rx.dong.com.rx.ui;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mxn.soul.flowingdrawer_core.MenuFragment;
+
+import rx.dong.com.rx.R;
 
 /**
  * Created by SkyEyesStion on 2016/2/23.

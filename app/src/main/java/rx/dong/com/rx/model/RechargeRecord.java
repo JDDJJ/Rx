@@ -1,4 +1,4 @@
-package rx.dong.com.rx;
+package rx.dong.com.rx.model;
 
 import java.util.List;
 
