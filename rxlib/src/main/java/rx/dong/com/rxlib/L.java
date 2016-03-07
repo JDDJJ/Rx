@@ -6,16 +6,15 @@ package rx.dong.com.rxlib;
 
 import android.util.Log;
 
+
 /**
- * Log统一管理类
- *
- * @author way
+ * Log's controller
  */
 public class L {
-    public static boolean isDebug = true;// 是否需要打印bug，可以在application的onCreate函数里面初始化
+    public static boolean isDebug = true;//initialize in Application's onCreate to log bug
     private static final String TAG = "way";
 
-    // 下面四个是默认tag的函数
+    // 下面是四个tag
     public static void i(String msg) {
         if (isDebug)
             Log.i(TAG, msg);
@@ -36,7 +35,7 @@ public class L {
             Log.v(TAG, msg);
     }
 
-    // 下面是传入自定义tag的函数
+    //下面是自定义
     public static void i(String tag, String msg) {
         if (isDebug)
             Log.i(tag, msg);

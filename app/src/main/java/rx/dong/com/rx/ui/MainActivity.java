@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
+import com.jakewharton.scalpel.ScalpelFrameLayout;
 import com.mxn.soul.flowingdrawer_core.FlowingView;
 import com.mxn.soul.flowingdrawer_core.LeftDrawerLayout;
 import com.orhanobut.logger.Logger;
@@ -42,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
     FrameLayout idContainerMenu;
     @Bind(R.id.id_drawerlayout)
     LeftDrawerLayout idDrawerlayout;
+    @Bind(R.id.main_scalpel)
+    ScalpelFrameLayout mainScalpel;
     private LeftDrawerLayout mLeftDrawerLayout;
     private Subscription observable;
 
@@ -50,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        mainScalpel.setLayerInteractionEnabled(true);
         initDrawer();
 //        initRxCall();
         initRxGson();
