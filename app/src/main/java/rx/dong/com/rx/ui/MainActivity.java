@@ -1,11 +1,11 @@
 package rx.dong.com.rx.ui;
 
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 
 import com.jakewharton.scalpel.ScalpelFrameLayout;
 import com.mxn.soul.flowingdrawer_core.FlowingView;
@@ -28,6 +28,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.dong.com.rx.R;
 import rx.dong.com.rx.api.RxService;
 import rx.dong.com.rx.model.WithDrawRecord;
+import rx.dong.com.rx.util.AES;
 import rx.schedulers.Schedulers;
 import zhy.com.highlight.HighLight;
 
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     @Bind(R.id.btn)
     Button btn;
     @Bind(R.id.content)
-    CoordinatorLayout content;
+    RelativeLayout content;
     @Bind(R.id.sv)
     FlowingView sv;
     @Bind(R.id.id_container_menu)
@@ -53,11 +54,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        mainScalpel.setLayerInteractionEnabled(true);
         initDrawer();
 //        initRxCall();
-        initRxGson();
-
+//        initRxGson();
+        String string = AES.encrypt("123456你好String",
+                "dab85f0c65204c3f");
+        btn.setText(string);
+        System.err.println("!!!" + string);
+        System.err.println("!!!" + AES.decrypt(string, "dab85f0c65204c3f"));
     }
 
     private void initRxGson() {
@@ -132,10 +136,12 @@ public class MainActivity extends AppCompatActivity {
     public void onClick() {
         new HighLight(MainActivity.this)//
                 .anchor(findViewById(R.id.id_drawerlayout))
-                .addHighLight(R.id.btn, R.layout.info_up,
+                .addHighLight(R.id.btn, R.layout.info_down,
                         (rightMargin, bottomMargin, rectF, marginInfo) -> {
-                            marginInfo.leftMargin = rectF.right - rectF.width() / 2;
-                            marginInfo.topMargin = rectF.top + rectF.height();
+                            marginInfo.leftMargin = rectF.right - rectF.width();
+                            marginInfo.bottomMargin = bottomMargin + rectF.height();
                         }).show();
+        mainScalpel.setLayerInteractionEnabled(true);
+
     }
 }
