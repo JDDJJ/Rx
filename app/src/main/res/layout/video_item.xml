@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/task_des_bg"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:id="@+id/commentsBlank"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!--TODO：<VideoView
+                    android:id="@+id/media"
+                    android:layout_width="400dp"
+                    android:layout_height="400dp"
+                    android:layout_gravity="center"
+                    />-->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/feed_item_h"
+                >
+
+                <ImageView
+                    android:id="@+id/imv_preview"
+                    android:layout_width="@dimen/feed_item_w"
+                    android:layout_height="@dimen/feed_item_h"
+                    android:contentDescription="@null"/>
+
+                <rx.dong.com.rx.view.TextureVideoView
+                    android:id="@+id/textureview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+                <ImageView
+                    android:id="@+id/imv_video_play"
+                    android:layout_width="77dp"
+                    android:layout_height="77dp"
+                    android:layout_centerInParent="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/play"/>
+
+                <ProgressBar
+                    android:id="@+id/pb_waiting"
+                    style="?android:attr/progressBarStyleLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:visibility="gone"/>
+
+                <ProgressBar
+                    android:id="@+id/progress_progressbar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@null"
+                    android:max="100"
+                    android:progress="0"
+                    android:progressDrawable="@drawable/recorder_success_progress"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+
+                <ImageView
+                    android:id="@id/media"
+                    android:layout_width="@dimen/feed_item_w"
+                    android:layout_height="@dimen/feed_item_h"
+                    android:scaleType="centerCrop"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/task_status"
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_24dp"
+                            android:background="@color/task_status_color"
+                            android:gravity="center"
+                            android:padding="@dimen/cardradios_4dp"
+                            android:text="审核中"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/txt_size_subtitle"
+                            />
+
+                        <TextView
+                            android:id="@+id/txt_share_money"
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_24dp"
+                            android:background="@color/share_status_color"
+                            android:gravity="center"
+                            android:padding="@dimen/cardradios_4dp"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/txt_size_subtitle"
+                            android:visibility="gone"
+                            />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/txt_most_popular"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:background="@color/most_popular_color"
+                        android:gravity="center"
+                        android:padding="@dimen/cardradios_4dp"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/txt_size_subtitle"
+                        android:visibility="gone"
+                        />
+
+                    <TextView
+                        android:id="@+id/txt_my_favorite"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:background="@color/my_favorite_color"
+                        android:gravity="center"
+                        android:padding="@dimen/cardradios_4dp"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/txt_size_subtitle"
+                        android:visibility="gone"/>
+
+                    <TextView
+                        android:id="@+id/txt_lucky_txt"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:background="@color/luck_star_color"
+                        android:gravity="center"
+                        android:padding="@dimen/cardradios_4dp"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/txt_size_subtitle"
+                        android:visibility="gone"/>
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+        </FrameLayout>
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="12dp"
+        android:alpha="0.1"
+        android:background="@color/white"/>
+</LinearLayout>

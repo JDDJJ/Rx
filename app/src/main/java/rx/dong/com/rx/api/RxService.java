@@ -25,9 +25,9 @@ public class RxService {
 
     }
 
-    public static RxApi createRxService() {
+    public static <T> T createApi(Class<T> clazz) {
 
-        return retrofit.create(RxApi.class);
+        return retrofit.create(clazz);
     }
 
 }

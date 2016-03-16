@@ -1,59 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.jakewharton.scalpel.ScalpelFrameLayout
-    android:id="@+id/main_scalpel"
+<com.mxn.soul.flowingdrawer_core.LeftDrawerLayout
+    android:id="@+id/id_drawerlayout"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:clipChildren="false"
+    >
 
-    <com.mxn.soul.flowingdrawer_core.LeftDrawerLayout
-        android:id="@+id/id_drawerlayout"
 
+    <!--content-->
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="12dp"
+        >
+
+        <rx.dong.com.rx.util.AutoLoadRecylerView
+            android:id="@+id/recyler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <!--menu-->
+    <RelativeLayout
+        android:layout_width="280dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
         android:clipChildren="false"
         >
 
+        <com.mxn.soul.flowingdrawer_core.FlowingView
+            android:id="@+id/sv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
-        <!--content-->
-        <RelativeLayout
-            android:id="@+id/content"
+        <FrameLayout
+            android:id="@+id/id_container_menu"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical"
-            >
+            android:layout_alignParentLeft="true"
+            android:layout_marginRight="25dp"
+            android:paddingRight="10dp"
+            />
+    </RelativeLayout>
 
-            <Button
-                android:id="@+id/btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1234"
-                android:textColor="@color/colorAccent"/>
-        </RelativeLayout>
-
-        <!--menu-->
-        <RelativeLayout
-            android:layout_width="280dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="start"
-            android:clipChildren="false"
-            >
-
-            <com.mxn.soul.flowingdrawer_core.FlowingView
-                android:id="@+id/sv"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-
-            <FrameLayout
-                android:id="@+id/id_container_menu"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignParentLeft="true"
-                android:layout_marginRight="25dp"
-                android:paddingRight="10dp"
-                />
-        </RelativeLayout>
-
-    </com.mxn.soul.flowingdrawer_core.LeftDrawerLayout>
-</com.jakewharton.scalpel.ScalpelFrameLayout>
+</com.mxn.soul.flowingdrawer_core.LeftDrawerLayout>

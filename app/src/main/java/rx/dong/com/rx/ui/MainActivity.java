@@ -2,21 +2,22 @@ package rx.dong.com.rx.ui;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
-import android.widget.Button;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
 
-import com.jakewharton.scalpel.ScalpelFrameLayout;
 import com.mxn.soul.flowingdrawer_core.FlowingView;
 import com.mxn.soul.flowingdrawer_core.LeftDrawerLayout;
 import com.orhanobut.logger.Logger;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,28 +27,36 @@ import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.dong.com.rx.R;
+import rx.dong.com.rx.api.RxApi;
 import rx.dong.com.rx.api.RxService;
+import rx.dong.com.rx.injector.component.DaggerMainActivityComponent;
+import rx.dong.com.rx.injector.module.MainActivityModule;
+import rx.dong.com.rx.model.MediaListBean;
 import rx.dong.com.rx.model.WithDrawRecord;
-import rx.dong.com.rx.util.AES;
+import rx.dong.com.rx.presenter.MediaPresenter;
+import rx.dong.com.rx.ui.adapter.MediaAdapter;
+import rx.dong.com.rx.util.AutoLoadRecylerView;
+import rx.dong.com.rx.view.ExploreListView;
 import rx.schedulers.Schedulers;
-import zhy.com.highlight.HighLight;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity implements ExploreListView,
+        AutoLoadRecylerView.loadMoreListener, SwipeRefreshLayout.OnRefreshListener {
 
-    @Bind(R.id.btn)
-    Button btn;
+    @Bind(R.id.recyler_view)
+    AutoLoadRecylerView recylerView;
     @Bind(R.id.content)
-    RelativeLayout content;
+    SwipeRefreshLayout content;
     @Bind(R.id.sv)
     FlowingView sv;
     @Bind(R.id.id_container_menu)
     FrameLayout idContainerMenu;
-    @Bind(R.id.id_drawerlayout)
-    LeftDrawerLayout idDrawerlayout;
-    @Bind(R.id.main_scalpel)
-    ScalpelFrameLayout mainScalpel;
     private LeftDrawerLayout mLeftDrawerLayout;
     private Subscription observable;
+    @Inject
+    MediaPresenter mediaPresenter;
+    private int page = 1;
+    private List<MediaListBean.MediaList> mediaList = new ArrayList<>();
+    private MediaAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,15 +66,42 @@ public class MainActivity extends AppCompatActivity {
         initDrawer();
 //        initRxCall();
 //        initRxGson();
-        String string = AES.encrypt("123456你好String",
-                "dab85f0c65204c3f");
-        btn.setText(string);
-        System.err.println("!!!" + string);
-        System.err.println("!!!" + AES.decrypt(string, "dab85f0c65204c3f"));
+        DaggerMainActivityComponent.builder()
+                .mainActivityModule(new MainActivityModule(this,1))
+                .build()
+                .inject(this);
+
+        initRecyclerView();
+
+    }
+
+    private void initDrawer() {
+        mLeftDrawerLayout = (LeftDrawerLayout) findViewById(R.id.id_drawerlayout);
+        FragmentManager fm = getSupportFragmentManager();
+        MyMenuFragment mMenuFragment = (MyMenuFragment) fm.findFragmentById(R.id.id_container_menu);
+        FlowingView mFlowingView = (FlowingView) findViewById(R.id.sv);
+        if (mMenuFragment == null) {
+            fm.beginTransaction().add(R.id.id_container_menu, mMenuFragment = new MyMenuFragment
+                    ()).commit();
+        }
+        mFlowingView.isStartAuto(0);
+        mLeftDrawerLayout.setFluidView(mFlowingView);
+        mLeftDrawerLayout.setMenuFragment(mMenuFragment);
+
+    }
+
+    private void initRecyclerView() {
+        content.setOnRefreshListener(this);
+        recylerView.setLayoutManager(new LinearLayoutManager(this));
+        recylerView.setHasFixedSize(true);
+        adapter = new MediaAdapter(this, mediaList);
+        recylerView.setAdapter(adapter);
+        mediaPresenter.attachView(this);
+        mediaPresenter.loadList(page);
     }
 
     private void initRxGson() {
-        RxService.createRxService().getWithDrawRecord("247", 1)
+        RxService.createApi(RxApi.class).getWithDrawRecord("247", 1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<WithDrawRecord>() {
@@ -91,7 +127,6 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onNext(WithDrawRecord withDrawRecord) {
-                        btn.setText(withDrawRecord.getList().get(0).getAccount_no().toString());
                         int success = withDrawRecord.getSuccess();
                         Logger.e("" + success);
                     }
@@ -99,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initRxCall() {
-        RxService.createRxService().callWithDrawRecord("247", 1)
+        RxService.createApi(RxApi.class).callWithDrawRecord("247", 1)
                 .enqueue(new Callback<WithDrawRecord>() {
                     @Override
                     public void onResponse(Call<WithDrawRecord> call, Response<WithDrawRecord>
@@ -116,32 +151,32 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mediaPresenter.detachView();
     }
 
-    private void initDrawer() {
-        mLeftDrawerLayout = (LeftDrawerLayout) findViewById(R.id.id_drawerlayout);
-        FragmentManager fm = getSupportFragmentManager();
-        MyMenuFragment mMenuFragment = (MyMenuFragment) fm.findFragmentById(R.id.id_container_menu);
-        FlowingView mFlowingView = (FlowingView) findViewById(R.id.sv);
-        if (mMenuFragment == null) {
-            fm.beginTransaction().add(R.id.id_container_menu, mMenuFragment = new MyMenuFragment
-                    ()).commit();
-        }
-        mFlowingView.isStartAuto(0);
-        mLeftDrawerLayout.setFluidView(mFlowingView);
-        mLeftDrawerLayout.setMenuFragment(mMenuFragment);
+
+    @Override
+    public void refresh(List<MediaListBean.MediaList> data) {
+        mediaList.addAll(data);
+        adapter.notifyDataSetChanged();
     }
 
-    @OnClick(R.id.btn)
-    public void onClick() {
-        new HighLight(MainActivity.this)//
-                .anchor(findViewById(R.id.id_drawerlayout))
-                .addHighLight(R.id.btn, R.layout.info_down,
-                        (rightMargin, bottomMargin, rectF, marginInfo) -> {
-                            marginInfo.leftMargin = rectF.right - rectF.width();
-                            marginInfo.bottomMargin = bottomMargin + rectF.height();
-                        }).show();
-        mainScalpel.setLayerInteractionEnabled(true);
+    @Override
+    public void loadMore(List<MediaListBean.MediaList> data) {
+        mediaList.addAll(data);
+        adapter.notifyDataSetChanged();
+    }
 
+    @Override
+    public void onLoadMore() {
+        page++;
+        mediaPresenter.loadList(page);
+    }
+
+    @Override
+    public void onRefresh() {
+        page = 1;
+        mediaList.clear();
+        mediaPresenter.loadList(page);
     }
 }

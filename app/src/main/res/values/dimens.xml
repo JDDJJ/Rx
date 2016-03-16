@@ -1,5 +1,152 @@
 <resources>
+    <!--所有可操作元素最小点击区域尺寸：48dp X 48dp。-->
+    <!--栅格系统的最小单位是8dp，一切距离、尺寸都应该是8dp的整数倍。以下是一些常见的尺寸与距离：-->
+    <!--* 顶部状态栏高度：24dp-->
+    <!--* Appbar最小高度：56dp-->
+    <!--* 底部导航栏高度：48dp-->
+    <!--* 悬浮按钮尺寸：56x56dp/40x40dp-->
+    <!--* 用户头像尺寸：64x64dp/40x40dp-->
+    <!--* 小图标点击区域：48x48dp-->
+    <!--* 侧边抽屉到屏幕右边的距离：56dp-->
+    <!--* 卡片间距：8dp-->
+    <!--* 分隔线上下留白：8dp-->
+    <!--* 大多元素的留白距离：16dp-->
+    <!--* 屏幕左右对齐基线：16dp-->
+    <!--* 文字左侧对齐基线：72dp-->
+    <!--悬浮按钮有两种尺寸：56x56dp/40x40dp-->
+    <!--卡片统一带有2dp的圆角。-->
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="nav_header_vertical_spacing">16dp</dimen>
+    <dimen name="nav_header_height">222dp</dimen>
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <!--望按照从小打大一直排下去-->
+
+    <!--边框-->
+    <dimen name="frame_user">2dp</dimen>
+    <dimen name="frame_user_large">4dp</dimen>
+    <dimen name="frame_user_xl">8dp</dimen>
+    <dimen name="prompt_s">10dp</dimen>
+    <dimen name="prompt">12dp</dimen>
+    <dimen name="prompt_big">14dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="fab_margin_s">18dp</dimen>
+    <dimen name="item_task_flag">20dp</dimen>
+    <dimen name="title_big">24dp</dimen>
+    <dimen name="title_big_s">32dp</dimen>
+    <dimen name="title_big_x">36dp</dimen>
+    <!--用户头像-->
+    <dimen name="profile_picture">40dp</dimen>
+    <dimen name="profile_picture_s">48dp</dimen>
+    <dimen name="profile_picture_m">56dp</dimen>
+    <dimen name="profile_picture_x">64dp</dimen>
+    <dimen name="profile_picture_xl">72dp</dimen>
+    <dimen name="profile_picture_xxl">80dp</dimen>
+    <dimen name="profile_picture_xxxl">88dp</dimen>
+    <!--各种框框长度-->
+    <dimen name="border_length">96dp</dimen>
+    <dimen name="height_50dp">50dp</dimen>
+    <!--文字大小-->
+    <dimen name="txt_size_small_tip">12sp</dimen>
+    <dimen name="txt_size_body">14sp</dimen>
+    <dimen name="txt_size_14sp">14sp</dimen>
+    <dimen name="txt_size_subtitle">16sp</dimen>
+    <dimen name="txt_size_16sp">16sp</dimen>
+    <dimen name="txt_size_18sp">18sp</dimen>
+    <dimen name="txt_size_appbar">20sp</dimen>
+    <dimen name="txt_size_headline">24sp</dimen>
+    <dimen name="txt_size_28sp">28sp</dimen>
+    <dimen name="txt_size_32sp">32sp</dimen>
+    <dimen name="txt_size_40sp">40sp</dimen>
+    <dimen name="txt_size_Super_sized_1">34sp</dimen>
+    <!--边距-->
+    <dimen name="margin_5dp">5dp</dimen>
+    <dimen name="padding_5dp">5dp</dimen>
+    <dimen name="padding_10dp">5dp</dimen>
+    <dimen name="space_8dp">8dp</dimen>
+    <dimen name="space_16dp">16dp</dimen>
+    <dimen name="space_24dp">24dp</dimen>
+    <dimen name="space_28dp">28dp</dimen>
+    <dimen name="space_32dp">32dp</dimen>
+    <dimen name="space_48dp">48dp</dimen>
+    <dimen name="space_50dp">50dp</dimen>
+    <dimen name="space_54dp">54dp</dimen>
+    <!--图标-->
+    <dimen name="icon_48dp">48dp</dimen>
+    <dimen name="icon_40dp">40dp</dimen>
+    <!--线的高度-->
+    <dimen name="line_width_0.5dp">0.5dp</dimen>
+    <dimen name="line_width_1dp">1dp</dimen>
+    <dimen name="line_width_2dp">2dp</dimen>
+    <!--自定义控件MaterialEditText-->
+    <dimen name="inner_components_spacing">8dp</dimen>
+    <dimen name="bottom_ellipsis_height">4dp</dimen>
+
+
+    <dimen name="height_100px">50dp</dimen>
+    <!--自定义弹出对话框-->
+    <dimen name="md_dialog_frame_margin">24dp</dimen>
+    <!-- Total title margin bottom is 16, but we split this between content and title -->
+    <dimen name="md_title_frame_margin_bottom">12dp</dimen>
+    <dimen name="md_title_frame_margin_bottom_less">6dp</dimen>
+    <!-- The desired padding when no title is visible,
+         This plus md_content_padding_top should equals md_dialog_frame_margin -->
+    <dimen name="md_notitle_vertical_padding">16dp</dimen>md_notitle_vertical_padding
+
+    <dimen name="md_content_padding_top">8dp</dimen>
+    <dimen name="md_simplelistitem_padding_top">8dp</dimen>
+
+    <dimen name="md_button_min_width">72dp</dimen>
+    <!-- Above and below buttons, 36+6+6=48 for the height of the button frame -->
+    <dimen name="md_button_inset_vertical">6dp</dimen>
+    <dimen name="md_button_inset_horizontal">4dp</dimen>
+    <dimen name="md_button_textpadding_horizontal">1dp</dimen>
+    <dimen name="md_button_padding_horizontal">8dp</dimen>
+    <dimen name="md_button_padding_vertical">4dp</dimen>
+    <dimen name="md_button_padding_horizontal_internalexternal">32dp</dimen>
+    <!-- 16dp - 4dp (inset from background drawable) -->
+    <dimen name="md_button_padding_frame_side">12dp</dimen>
+    <dimen name="md_neutral_button_margin">12dp</dimen>
+
+    <!-- actual content padding bottom is 16dp, but we split between button bar and content -->
+    <dimen name="md_content_padding_bottom">8dp</dimen>
+    <dimen name="md_button_frame_vertical_padding">8dp</dimen>
+    <dimen name="md_button_height">48dp</dimen>
+    <dimen name="md_title_textsize">20sp</dimen>
+    <dimen name="md_content_textsize">16sp</dimen>
+    <dimen name="md_button_textsize">14sp</dimen>
+    <dimen name="md_listitem_textsize">16sp</dimen>
+    <dimen name="md_listitem_height">48dp</dimen>
+    <dimen name="md_listitem_control_margin">6dp</dimen>
+    <dimen name="md_icon_margin">16dp</dimen>
+    <dimen name="md_icon_max_size">48dp</dimen>
+    <dimen name="md_listitem_margin_left">24dp</dimen>
+    <dimen name="md_action_corner_radius">2dp</dimen>
+    <dimen name="md_divider_height">1dp</dimen>
+
+    <dimen name="md_bg_corner_radius">2dp</dimen>
+    <dimen name="circular_progress_border">4dp</dimen>
+    <dimen name="md_listitem_vertical_margin">12dp</dimen>
+    <dimen name="md_listitem_vertical_margin_choice">8dp</dimen>
+    <dimen name="comment_avatar_size">56dp</dimen>
+    <dimen name="toolbar_z_4dp">4dp</dimen>
+    <dimen name="line_height_48dp">48dp</dimen>
+    <dimen name="space_padding_12dp">12dp</dimen>
+    <dimen name="cardradios_4dp">4dp</dimen>
+    <dimen name="circle_136dp">136dp</dimen>
+    <dimen name="space_padding_6dp">6dp</dimen>
+    <dimen name="feed_item_h">360dp</dimen>
+    <dimen name="feed_item_w">400dp</dimen>
+    <dimen name="txt_size_12sp">10sp</dimen>
+    <dimen name="avatar_size_32">32dp</dimen>
+    <dimen name="line_height">36dp</dimen>
+    <dimen name="avatar_size_40">40dp</dimen>
+    <dimen name="space_padding_24dp">24dp</dimen>
+    <dimen name="grid_img_h">160dp</dimen>
+    <dimen name="grid_view_h">160dp</dimen>
+    <dimen name="mytask_margin_top">110dp</dimen>
+    <dimen name="switch_model_h">52dp</dimen>
+    <dimen name="comment_media_h">360dp</dimen>
+
 </resources>
