@@ -67,7 +67,7 @@ public class MainActivity extends BaseActivity implements ExploreListView,
 //        initRxCall();
 //        initRxGson();
         DaggerMainActivityComponent.builder()
-                .mainActivityModule(new MainActivityModule(this,1))
+                .mainActivityModule(new MainActivityModule(this, 1))
                 .build()
                 .inject(this);
 
@@ -131,6 +131,7 @@ public class MainActivity extends BaseActivity implements ExploreListView,
                         Logger.e("" + success);
                     }
                 });
+//        new Request.Builder().tag("1").build();
     }
 
     private void initRxCall() {
