@@ -7,6 +7,7 @@ import com.orhanobut.logger.Logger;
 import javax.inject.Inject;
 
 import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.dong.com.rx.api.MediaApi;
 import rx.dong.com.rx.api.RxService;
 import rx.dong.com.rx.model.MediaListBean;
@@ -22,16 +23,16 @@ public class MediaPresenter extends BasePresenter<ExploreListView> {
     private int page;
 
     @Inject
-    public MediaPresenter(Context context,int i) {
+    public MediaPresenter(Context context, int i) {
         //construct
         exploreListService = RxService.createApi(MediaApi.class);
-        page =i;
+        page = i;
     }
 
     public void loadList(final int page) {
         exploreListService.getMediaList("0", page)
                 .subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<MediaListBean>() {
                     @Override
                     public void onCompleted() {

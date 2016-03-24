@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        />
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.35"
+        android:scaleType="centerCrop"
+        android:src="@drawable/light_bg"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/space_padding_12dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="160dp">
+
+            <LinearLayout
+                android:layout_width="@dimen/item_w_stroke"
+                android:layout_height="@dimen/item_w_stroke"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/shape_edit_send"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="@dimen/item_w"
+                    android:layout_height="@dimen/item_w"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_vertical"
+                    android:scaleType="centerCrop"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="@dimen/item_w_stroke"
+                android:layout_height="@dimen/item_w_stroke"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:background="@drawable/shape_edit_send"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="@dimen/item_w"
+                    android:layout_height="@dimen/item_w"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_gravity="center_vertical"
+                    android:scaleType="centerCrop"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="@dimen/item_w_stroke"
+                android:layout_height="@dimen/item_w_stroke"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/shape_edit_send"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="@dimen/item_w"
+                    android:layout_height="@dimen/item_w"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:scaleType="centerCrop"
+                    />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:text="每日搞笑"
+                android:textColor="@color/white"
+                android:textSize="24dp"
+                android:typeface="monospace"/>
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="@dimen/icon_16dp"
+                android:layout_height="@dimen/icon_16dp"
+                android:layout_alignLeft="@+id/linearLayout"
+                android:layout_alignParentTop="true"
+                android:layout_alignStart="@+id/linearLayout"
+                />
+
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="@dimen/icon_16dp"
+                android:layout_height="@dimen/icon_16dp"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/textView2"
+                android:layout_toStartOf="@+id/textView2"
+                />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/imageView5"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:text="99999"
+                android:textColor="@color/white"
+                android:textSize="10dp"
+                android:typeface="monospace"/>
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/textView2"
+                android:layout_gravity="right"
+                android:layout_toEndOf="@+id/imageView5"
+                android:layout_toRightOf="@+id/imageView5"
+                android:text="99999"
+                android:textColor="@color/white"
+                android:textSize="10dp"
+                android:typeface="monospace"/>
+        </RelativeLayout>
+
+    </LinearLayout>
+</FrameLayout>

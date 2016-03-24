@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="topic_select">
+        <item>发现话题</item>
+        <item>一周最热</item>
+    </string-array>
+</resources>

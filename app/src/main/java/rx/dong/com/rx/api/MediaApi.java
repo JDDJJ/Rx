@@ -12,7 +12,7 @@ import rx.dong.com.rx.model.MediaListBean;
 public interface MediaApi {
 
     @FormUrlEncoded
-    @POST("MappedTask/getMappedRecruit")
+    @POST("Media/sortRobotMediaByTime")
     Observable<MediaListBean> getMediaList
             (@Field("task_id") String task_id, @Field("page") int page);
 }

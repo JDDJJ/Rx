@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.mxn.soul.flowingdrawer_core.LeftDrawerLayout
-    android:id="@+id/id_drawerlayout"
+    android:id="@+id/m_left_drawerlayout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,20 +9,8 @@
 
 
     <!--content-->
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="12dp"
-        >
-
-        <rx.dong.com.rx.util.AutoLoadRecylerView
-            android:id="@+id/recyler_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </android.support.v4.widget.SwipeRefreshLayout>
+    <include
+        layout="@layout/newdiscover_main"/>
 
     <!--menu-->
     <RelativeLayout

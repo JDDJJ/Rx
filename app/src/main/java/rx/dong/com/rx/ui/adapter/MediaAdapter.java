@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.List;
 
@@ -79,7 +80,17 @@ public class MediaAdapter extends RecyclerView.Adapter {
 
     private void initImg(ImgHolder holder, int position) {
         ImgHolder imgHolder = holder;
-        Glide.with(context).load(mediaList.get(position).getImg_url()).into(imgHolder.media);
+        if (mediaList.get(position)
+                .getVideo_url().contains("gif")) {
+
+            Glide.with(context).load(mediaList.get(position).getVideo_url()).asGif()
+                    .diskCacheStrategy
+                            (DiskCacheStrategy.SOURCE).fitCenter().error(R.drawable.jt_down).into
+                    (imgHolder.media);
+
+        } else {
+            Glide.with(context).load(mediaList.get(position).getImg_url()).into(imgHolder.media);
+        }
     }
 
     private void initVideo(VideoHolder holder, int position) {
@@ -198,6 +209,21 @@ public class MediaAdapter extends RecyclerView.Adapter {
     public int getItemCount() {
         return mediaList.size();
     }
+
+    public void changeData(List<MediaListBean.MediaList> mediaList) {
+        this.mediaList = mediaList;
+        notifyDataSetChanged();
+    }
+
+    public void addData(List<MediaListBean.MediaList> mediaList) {
+        if (this.mediaList == null) {
+            changeData(mediaList);
+        } else {
+            this.mediaList.addAll(mediaList);
+            notifyDataSetChanged();
+        }
+    }
+
 
     static class ImgHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.media)

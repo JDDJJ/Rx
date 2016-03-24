@@ -148,5 +148,8 @@
     <dimen name="mytask_margin_top">110dp</dimen>
     <dimen name="switch_model_h">52dp</dimen>
     <dimen name="comment_media_h">360dp</dimen>
+    <dimen name="item_w">96dp</dimen>
+    <dimen name="icon_16dp">14dp</dimen>
+    <dimen name="item_w_stroke">100dp</dimen>
 
 </resources>

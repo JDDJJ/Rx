@@ -1,10 +1,17 @@
 package rx.dong.com.rx.ui;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
+import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
+import android.widget.Spinner;
 
 import com.mxn.soul.flowingdrawer_core.FlowingView;
 import com.mxn.soul.flowingdrawer_core.LeftDrawerLayout;
@@ -36,27 +43,48 @@ import rx.dong.com.rx.model.WithDrawRecord;
 import rx.dong.com.rx.presenter.MediaPresenter;
 import rx.dong.com.rx.ui.adapter.MediaAdapter;
 import rx.dong.com.rx.util.AutoLoadRecylerView;
+import rx.dong.com.rx.util.DividerItemDecoration;
+import rx.dong.com.rx.util.ScrollToHide;
+import rx.dong.com.rx.util.ScrollToHideListener;
 import rx.dong.com.rx.view.ExploreListView;
 import rx.schedulers.Schedulers;
 
 public class MainActivity extends BaseActivity implements ExploreListView,
-        AutoLoadRecylerView.loadMoreListener, SwipeRefreshLayout.OnRefreshListener {
+        AutoLoadRecylerView.loadMoreListener, SwipeRefreshLayout.OnRefreshListener,
+        ScrollToHideListener {
 
-    @Bind(R.id.recyler_view)
-    AutoLoadRecylerView recylerView;
-    @Bind(R.id.content)
-    SwipeRefreshLayout content;
+    //
+//    @Bind(R.id.toolbar)
+//    Toolbar toolbar;
+    @Bind(R.id.fab)
+    FloatingActionButton fab;
     @Bind(R.id.sv)
     FlowingView sv;
     @Bind(R.id.id_container_menu)
     FrameLayout idContainerMenu;
-    private LeftDrawerLayout mLeftDrawerLayout;
+    @Bind(R.id.cv_spinner)
+    CardView cvSpinner;
+    @Bind(R.id.recyler_view)
+    AutoLoadRecylerView recylerView;
+    @Bind(R.id.m_left_drawerlayout)
+    LeftDrawerLayout mLeftDrawerlayout;
+    @Bind(R.id.topic_spinner)
+    Spinner topicSpinner;
+    @Bind(R.id.content)
+    SwipeRefreshLayout content;
+
     private Subscription observable;
     @Inject
     MediaPresenter mediaPresenter;
     private int page = 1;
     private List<MediaListBean.MediaList> mediaList = new ArrayList<>();
     private MediaAdapter adapter;
+    private LeftDrawerLayout mLeftDrawerLayout;
+    private LinearLayoutManager linearLayoutManager;
+    private TranslateAnimation mShowAction;
+    private TranslateAnimation mHiddenAction;
+    private TranslateAnimation mShowAction2;
+    private TranslateAnimation mHiddenAction2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,19 +92,38 @@ public class MainActivity extends BaseActivity implements ExploreListView,
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         initDrawer();
+//        initToolbar();
 //        initRxCall();
 //        initRxGson();
         DaggerMainActivityComponent.builder()
                 .mainActivityModule(new MainActivityModule(this, 1))
                 .build()
                 .inject(this);
-
-        initRecyclerView();
+        viewAction();
+        initViewPage();
+//        initSpinner();
+//        initRecyclerView();
 
     }
 
+    private void initViewPage() {
+    }
+
+    private void initSpinner() {
+        ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.topic_spinner_item,
+                getResources().getStringArray(R.array.topic_select));
+        adapter.setDropDownViewResource(R.layout.drop_down_item);
+        topicSpinner.setAdapter(adapter);
+    }
+
+    private void initToolbar() {
+//        toolbar.setTitle("A");
+//        setSupportActionBar(toolbar);
+//        getSupportActionBar().setDisplayShowHomeEnabled(true);
+    }
+
     private void initDrawer() {
-        mLeftDrawerLayout = (LeftDrawerLayout) findViewById(R.id.id_drawerlayout);
+        mLeftDrawerLayout = (LeftDrawerLayout) findViewById(R.id.m_left_drawerlayout);
         FragmentManager fm = getSupportFragmentManager();
         MyMenuFragment mMenuFragment = (MyMenuFragment) fm.findFragmentById(R.id.id_container_menu);
         FlowingView mFlowingView = (FlowingView) findViewById(R.id.sv);
@@ -92,10 +139,15 @@ public class MainActivity extends BaseActivity implements ExploreListView,
 
     private void initRecyclerView() {
         content.setOnRefreshListener(this);
-        recylerView.setLayoutManager(new LinearLayoutManager(this));
+        linearLayoutManager = new LinearLayoutManager(this);
+        recylerView.setLayoutManager(linearLayoutManager);
         recylerView.setHasFixedSize(true);
         adapter = new MediaAdapter(this, mediaList);
+        recylerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration
+                .VERTICAL_LIST));
         recylerView.setAdapter(adapter);
+        recylerView.setLoadMoreListener(this);
+        recylerView.setOnScrollListener(new ScrollToHide(linearLayoutManager, this));
         mediaPresenter.attachView(this);
         mediaPresenter.loadList(page);
     }
@@ -113,14 +165,14 @@ public class MainActivity extends BaseActivity implements ExploreListView,
 
                     @Override
                     public void onError(Throwable e) {
+
                         if (e instanceof HttpException) {
-                            if (e instanceof HttpException) {
-                                ResponseBody body = ((HttpException) e).response().errorBody();
-                                try {
-                                    Logger.e(body.string());
-                                } catch (IOException e1) {
-                                    e1.printStackTrace();
-                                }
+                            ResponseBody body = ((HttpException) e).response().errorBody();
+                            try {
+                                Logger.e(body.string());
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+
                             }
                         }
                     }
@@ -158,19 +210,21 @@ public class MainActivity extends BaseActivity implements ExploreListView,
 
     @Override
     public void refresh(List<MediaListBean.MediaList> data) {
-        mediaList.addAll(data);
-        adapter.notifyDataSetChanged();
+        adapter.changeData(data);
+        if (content.isRefreshing())
+            content.setRefreshing(false);
     }
 
     @Override
     public void loadMore(List<MediaListBean.MediaList> data) {
-        mediaList.addAll(data);
-        adapter.notifyDataSetChanged();
+        recylerView.setLoading(false);
+        adapter.addData(data);
     }
 
     @Override
     public void onLoadMore() {
         page++;
+        System.err.println("=======" + page);
         mediaPresenter.loadList(page);
     }
 
@@ -179,5 +233,42 @@ public class MainActivity extends BaseActivity implements ExploreListView,
         page = 1;
         mediaList.clear();
         mediaPresenter.loadList(page);
+    }
+
+    @Override
+    public void hideView() {
+//        fab.startAnimation(mHiddenAction2);
+        cvSpinner.startAnimation(mHiddenAction);
+        fab.setVisibility(View.GONE);
+        cvSpinner.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showView() {
+//        fab.startAnimation(mShowAction2);
+        cvSpinner.startAnimation(mShowAction);
+        fab.setVisibility(View.VISIBLE);
+        cvSpinner.setVisibility(View.VISIBLE);
+    }
+
+    private void viewAction() {
+        mShowAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
+                Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
+                -2.0f, Animation.RELATIVE_TO_SELF, 0.0f);
+        mShowAction.setDuration(500);
+        mShowAction2 = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
+                Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
+                2.0f, Animation.RELATIVE_TO_SELF, 0.0f);
+        mShowAction2.setDuration(500);
+        mHiddenAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF,
+                0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
+                Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
+                -1.0f);
+        mHiddenAction.setDuration(500);
+        mHiddenAction2 = new TranslateAnimation(Animation.RELATIVE_TO_SELF,
+                0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
+                Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
+                2.0f);
+        mHiddenAction2.setDuration(500);
     }
 }
